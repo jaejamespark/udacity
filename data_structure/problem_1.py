@@ -27,7 +27,6 @@ class LRU_Cache(object):
         if self.current_capacity < self.max_capacity:
             self._add(key, value)
         else:
-
             self._remove_head()
             self._add(key, value)
 
@@ -151,3 +150,32 @@ print(our_cache)
 our_cache.get(3)
 
 print(our_cache)
+
+def test_case_1():
+    # Testing a basic case
+    # Input is (key=1, value=1)
+    my_cache = LRU_Cache(5)
+    my_cache.set(1, 1)
+    result = my_cache.get(1)
+    assert result == 1
+    print("PASS: Expected result received: 1 ")
+
+
+def test_case_2():
+    pass
+
+if __name__ == "__main__":
+
+    #test_case_1()
+    # Expected output is
+
+    #test_case_2()
+    # Expected output is
+
+    #test_case()
+    # Expected output is
+    pass
+
+
+
+
