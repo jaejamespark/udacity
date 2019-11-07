@@ -2,10 +2,14 @@ class LRU_Cache(object):
 
     def __init__(self, capacity):
         # Initialize class variables
-        self.dic = dict()
+
+        if (not isinstance(capacity, int)) or (capacity < 1):
+            raise ValueError("Capacity should be an integer greater than 0")
         self.max_capacity = capacity
+
+        self.dic = dict()
         self.current_capacity = 0
-        self.head = Node(None, None)
+        self.head = None
         self.tail = self.head
 
     def get(self, key):
@@ -24,6 +28,7 @@ class LRU_Cache(object):
 
     def set(self, key, value):
         # Set the value if the key is not present in the cache. If the cache is at capacity remove the oldest item.
+
         if self.current_capacity < self.max_capacity:
             self._add(key, value)
         else:
@@ -43,9 +48,14 @@ class LRU_Cache(object):
 
         # node is the head
         if self.head.key == key:
-            new_head = self.head.next
-            self.head = new_head
-            self.head.prev = None
+
+            if self.head.next is None:
+                # When there is only one node
+                self.head = None
+            else:
+                new_head = self.head.next
+                self.head = new_head
+                self.head.prev = None
 
         # node is the tail
         elif self.tail.key == key:
@@ -78,7 +88,7 @@ class LRU_Cache(object):
         new_tail = Node(key, value)
 
         # first time adding
-        if self.head.key is None:
+        if self.head is None:
             self.head = new_tail
             self.tail = new_tail
         # head already exists. append to tail
@@ -126,34 +136,37 @@ class Node():
         self.prev = None
 
 
-our_cache = LRU_Cache(5)
+def provided_example():
+    our_cache = LRU_Cache(5)
 
-our_cache.set(1, 1)
-our_cache.set(2, 2)
-our_cache.set(3, 3)
-our_cache.set(4, 4)
+    our_cache.set(1, 1)
+    our_cache.set(2, 2)
+    our_cache.set(3, 3)
+    our_cache.set(4, 4)
 
-print(our_cache)
+    print(our_cache)
 
-our_cache.get(1)       # returns 1
-our_cache.get(2)       # returns 2
-our_cache.get(9)       # returns -1 because 9 is not present in the cache
+    our_cache.get(1)       # returns 1
+    our_cache.get(2)       # returns 2
+    our_cache.get(9)       # returns -1 because 9 is not present in the cache
 
-print(our_cache)
+    print(our_cache)
 
-our_cache.set(5, 5)
-our_cache.set(6, 6)
+    our_cache.set(5, 5)
+    our_cache.set(6, 6)
 
-print(our_cache)
+    print(our_cache)
 
-# returns -1 because the cache reached it's capacity and 3 was the least recently used entry
-our_cache.get(3)
+    # returns -1 because the cache reached it's capacity and 3 was the least recently used entry
+    our_cache.get(3)
 
-print(our_cache)
+    print(our_cache)
+
 
 def test_case_1():
-    # Testing a basic case
+    # Test scenario: Inserts one item and gets the item.
     # Input is (key=1, value=1)
+    # Output should be 1
     my_cache = LRU_Cache(5)
     my_cache.set(1, 1)
     result = my_cache.get(1)
@@ -162,20 +175,45 @@ def test_case_1():
 
 
 def test_case_2():
-    pass
+    # Test scenario:  Inserts one item then tries to get non-existing item.
+    # Input is (key=1, value=1) and get key=100
+    # Output should be -1
+    my_cache = LRU_Cache(5)
+    my_cache.set(1, 1)
+    result = my_cache.get(100)
+    assert result == -1
+    print("PASS: Expected result received: -1 ")
+
+
+def test_case_3():
+    # Test scenario:  Try creating an LRU_Cache instance with negative integer.
+    # Input is (key=1, value=1) and get key=100
+    # Output should be -1
+    try:
+        my_cache = LRU_Cache(-100)
+    except ValueError as e:
+        print("PASS: Expected result received: ValueError ")
+    else:
+        print("FAIL: Expecting ValueError and not received one.")
+
+    # Test scenario:  Try creating an LRU_Cache instance with a string.
+    # Input is "abc"
+    # Output should be ValueError
+    try:
+        my_cache = LRU_Cache("abc")
+    except ValueError as e:
+        print("PASS: Expected result received: ValueError ")
+    else:
+        print("FAIL: Expecting ValueError and not received one.")
 
 if __name__ == "__main__":
+    test_case_1()
+    # Expected output is 1
 
-    #test_case_1()
-    # Expected output is
+    test_case_2()
+    # Expected output is -1
 
-    #test_case_2()
-    # Expected output is
+    test_case_3()
+    # Expected output is ValueError exception
 
-    #test_case()
-    # Expected output is
-    pass
-
-
-
-
+    #provided_example()
