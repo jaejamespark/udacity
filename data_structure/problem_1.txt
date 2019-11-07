@@ -1,0 +1,11 @@
+My LRU Cache implementation uses a linkedlist and a dictionary. The linkedlist stores keys and values. The dictionary stores keys and references to nodes in the linkedlist.
+
+The nodes in the linkedlist is in chronological order which the head being the oldest and least used node. The usage of a linkedlist in this problem allows fast append (O(1)) of new item and fast popping (O(1)) of old item. However, the lookup will take O(n) in a linkedlist. To improve the look up time, I used a dictionary.
+
+The dictionary allows a fast look up (O(1) in average) using a key. When user wants to get a value using a key, I can do O(1) look up in the dictionary then find the correct node that contains the value that user needs.
+
+The space complexity of the linkedlist and the dictionary would be O(n) where n being size of the cache.
+
+
+
+

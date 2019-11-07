@@ -1,0 +1,3 @@
+The blockchain implementation uses a linkedlist. When new block needs to be inserted into the blockchain, it can be done in O(1) by adding the new block to the blockchain's tail. I added a print method which prints data in the blockchain. Running that method will cost O(n) where n is the number of blocks in the blockchain.
+The space complexity of a blockchain is O(n) where n is the number of blocks in the blockchain.
+
