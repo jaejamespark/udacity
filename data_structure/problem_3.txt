@@ -1,0 +1,5 @@
+In huffman encoding method, the sorting using the character frequencies as the key costs the most which is O(nlogn) where n is the number of characters in the input. Building the huffman tree and creating a mapping between binary codes and characters cost O(number of characters in the input) because we have to loop through each character in the input or traverse down the huffman binrary tree.
+
+The huffman decoding costs the time complexity of O(nlogn) where n is the number of characters. I have to traverse the huffman binary tree (logn) for each character (n) in the input so the overall it would cost O(nlogn).
+
+The space complexity of huffman algorithm would be O(n) where n is the number of unique characters in the input. The huffman tree stores only the unique characters from the input in the nodes.
