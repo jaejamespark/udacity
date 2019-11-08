@@ -41,73 +41,63 @@ class LinkedList:
 
         return size
 
-def union(llist_1, llist_2):
-    # Your Solution Here
-
-    result = LinkedList()
-    current_1 = llist_1.head
-
-    # insert linkedlist 1 into result linkedlist
-    while current_1 is not None:
-        exists_in_result = False
-        current_result = result.head
-        while current_result is not None:
-            if current_result.value == current_1.value:
-                exists_in_result = True
-                break
-            current_result = current_result.next
-        if not exists_in_result:
-            result.append(current_1.value)
-        current_1 = current_1.next
-
-    # only insert the ones that only exists in linkedlist 2
-    current_2 = llist_2.head
-    while current_2 is not None:
-        exists_in_result = False
-        current_result = result.head
-        while current_result is not None:
-            if current_result.value == current_2.value:
-                exists_in_result = True
-                break
-            current_result = current_result.next
-        if not exists_in_result:
-            result.append(current_2.value)
-        current_2 = current_2.next
-    return result
-
-
 def intersection(llist_1, llist_2):
     # Your Solution Here
 
-    result = LinkedList()
+    result = dict()
     current_1 = llist_1.head
+    current_2 = llist_2.head
 
-    # Goes through linkedlist 1
-    while current_1 is not None:
-        value_1 = current_1.value
-        current_2 = llist_2.head
+    if current_1:
+        while current_1 is not None:
+            if current_1.value in result:
+                result[current_1.value] = result.get(current_1.value) + 1
+            else:
+                result[current_1.value] = 1
+            current_1 = current_1.next
 
-        # Goes through linked list 2
+    if current_2:
         while current_2 is not None:
-            value_2 = current_2.value
-
-            exists_in_result = False
-            if value_1 == value_2:
-                current_result = result.head
-
-                # Goes through result linkedlist
-                # to avoid any duplicated entry
-                while current_result:
-                    if value_1 == current_result.value:
-                        exists_in_result = True
-                    current_result = current_result.next
-
-                if not exists_in_result:
-                    result.append(value_1)
-
+            if current_2.value in result:
+                result[current_2.value] = result.get(current_2.value) + 1
+            else:
+                result[current_2.value] = 1
             current_2 = current_2.next
-        current_1 = current_1.next
-    return result
+
+    intersection = LinkedList()
+    for k, v in result.items():
+        if v > 1:
+            intersection.append(k)
+    return intersection
+
+
+def union(llist_1, llist_2):
+    # Your Solution Here
+
+    result = dict()
+    current_1 = llist_1.head
+    current_2 = llist_2.head
+
+    if current_1:
+        while current_1 is not None:
+            if current_1.value in result:
+                result[current_1.value] = result.get(current_1.value) + 1
+            else:
+                result[current_1.value] = 1
+            current_1 = current_1.next
+
+    if current_2:
+        while current_2 is not None:
+            if current_2.value in result:
+                result[current_2.value] = result.get(current_2.value) + 1
+            else:
+                result[current_2.value] = 1
+            current_2 = current_2.next
+
+    union = LinkedList()
+    for k, v in result.items():
+        union.append(k)
+    return union
 
 def provided_example():
     # Test case 1

@@ -29,6 +29,9 @@ class LRU_Cache(object):
     def set(self, key, value):
         # Set the value if the key is not present in the cache. If the cache is at capacity remove the oldest item.
 
+        if self.max_capacity < 1:
+            raise Exception("Cannot perform operation on 0 capacity cache")
+
         if self.current_capacity < self.max_capacity:
             self._add(key, value)
         else:
@@ -170,7 +173,7 @@ def test_case_1():
     my_cache = LRU_Cache(5)
     my_cache.set(1, 1)
     result = my_cache.get(1)
-    assert result == 1
+    assert result == 1, "FAIL: Unexpected result obtained."
     print("PASS: Expected result received: 1 ")
 
 
@@ -181,7 +184,7 @@ def test_case_2():
     my_cache = LRU_Cache(5)
     my_cache.set(1, 1)
     result = my_cache.get(100)
-    assert result == -1
+    assert result == -1, "FAIL: Unexpected result obtained."
     print("PASS: Expected result received: -1 ")
 
 
@@ -196,6 +199,7 @@ def test_case_3():
     else:
         print("FAIL: Expecting ValueError and not received one.")
 
+
     # Test scenario:  Try creating an LRU_Cache instance with a string.
     # Input is "abc"
     # Output should be ValueError
@@ -206,6 +210,28 @@ def test_case_3():
     else:
         print("FAIL: Expecting ValueError and not received one.")
 
+
+def test_case_4():
+    # Test scenario:  Tests when cache size is 0
+    try:
+        my_cache = LRU_Cache(0)
+    except ValueError as e:
+        print("PASS: " + "Expected result received: ValueError")
+    else:
+        print("FAIL: Expected an exception but no exception was raised")
+
+
+def test_case_5():
+    # Test scenario:  Tests updating existing key and value
+    our_cache = LRU_Cache(2)
+    our_cache.set(1, 1)
+    our_cache.set(2, 2)
+    our_cache.set(1, 10)
+    result = our_cache.get(1)
+    assert result == 10, "FAIL: Unexpected result received. Expecting 10."
+    print("PASS: Expected result received: 10")
+
+
 if __name__ == "__main__":
     test_case_1()
     # Expected output is 1
@@ -215,5 +241,11 @@ if __name__ == "__main__":
 
     test_case_3()
     # Expected output is ValueError exception
+
+    test_case_4()
+    # Expected output is ValueError exception
+
+    test_case_5()
+    # Expected output is 10
 
     #provided_example()

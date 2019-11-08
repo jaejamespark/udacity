@@ -1,5 +1,5 @@
 This "find_files" functions finds files in the user supplied path and if any directory is found, it recursively calls itself with the new path of the directory. In the end, it returns a list of files that contains the suffix that user requested.
 
-The time complexity of this function would be O(n+m) where n is the total number of files and m is the total number of directories under the path. This function has to look at all the files and directories under the path.
+The time complexity of this function would be O(n * m) where n is the number of files in each folder and m is the number of directories under the path. This function has to look at all the files and directories under the path.
 
-The space complexity is O(n) where n is the number of found files.
+The space complexity is O(n * m) where n is the number of files in each folder and m is the number of directories under the path. There would be m recursive calls and for each call, there would be n files. So, in total there would be n*m paths to store in the memory.

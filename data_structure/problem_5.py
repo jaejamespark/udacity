@@ -9,6 +9,7 @@ class Block:
         self.previous_hash = previous_hash
         self.hash = self.calc_hash()
         self.prev = None
+        print("New block created at {}".format(self.timestamp))
 
     def calc_hash(self):
         sha = hashlib.sha256()
@@ -26,6 +27,10 @@ class Blockchain:
 
     def insert(self, data):
 
+        if data is None:
+            print("ERROR: Cannot add block without any data")
+            return
+
         if not isinstance(data, str):
             raise ValueError("Data should be string type")
 
@@ -41,6 +46,9 @@ class Blockchain:
             self.tail = block
 
     def print(self):
+        if self.tail is None:
+            print("ERROR: Block is empty. Nothing to print")
+            return
         block = self.tail
         while block.prev is not None:
             print(block.data)
@@ -81,6 +89,13 @@ def test_case_3():
         print("ValueError: " + str(e))
 
 
+def test_case_4():
+    # Test scenario: Print empty blockchain
+    # Expected output: "ERROR: Error message, Block is empty. Nothing to print"
+    blockchain = Blockchain()
+    blockchain.print()
+
+
 if __name__ == "__main__":
     test_case_1()
     # Output is "world \n hello"
@@ -90,3 +105,7 @@ if __name__ == "__main__":
 
     test_case_3()
     # "Data should be string type" error should occur
+
+    test_case_4()
+    # "Data should be string type" error should occur
+

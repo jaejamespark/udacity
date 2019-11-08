@@ -1,5 +1,5 @@
 The group can contain many subgroups. To see if a user is in a group, we have to look at all users in the current group and all the subgroups.
 
-The time complexity for this function would be O(combined number of users from all groups).
+The time complexity for this function would be O(n * m) where n is the number of users in each group and m is the number of groups. 
 
-The space complexity would be O(1) since we are just going through all user in all group without storing any data.
+The space complexity would be O(n * m) where n is the number of users in each group and m is the number of groups. The memory stores n users for each m number of stacks in recursion. Therefore, the total memory required would be O(n * m).

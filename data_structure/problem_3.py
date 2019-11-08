@@ -27,7 +27,14 @@ def huffman_encoding(data):
     if len(letters) <= 0:
         return
     elif len(letters) == 1:
-        root = letters[0][1]
+        #root = letters[0][1]
+        l = letters[0]
+        v = l[0]
+        root = Node(v)
+        root.left = l[1]
+
+        #root = letters[0][1]
+        #root.left = letters[0][1]
     else:
         while len(letters) > 1:
             letters = sorted(letters, key=lambda x: x[0])
@@ -122,6 +129,8 @@ def test_case_1():
     # Expected output: the original data which is "Hello world"
     a_great_sentence = "Hello world"
     encoded_data, tree = huffman_encoding(a_great_sentence)
+    print("The size of the encoded data is: {}".format(sys.getsizeof(int(encoded_data, base=2))))
+    print("The content of the encoded data is: {}".format(encoded_data))
     decoded_data = huffman_decoding(encoded_data, tree)
     assert decoded_data == a_great_sentence, "ERROR: original data and decoded data are different"
     print("original data: {}".format(a_great_sentence))
@@ -133,6 +142,8 @@ def test_case_2():
     # Expected output: None
     a_great_sentence = ""
     encoded_data, tree = huffman_encoding(a_great_sentence)
+   #print("The size of the encoded data is: {}".format(sys.getsizeof(int(encoded_data, base=2))))
+    print("The content of the encoded data is: {}".format(encoded_data))
     decoded_data = huffman_decoding(encoded_data, tree)
     assert decoded_data == None, "ERROR: For empty string as an input, expected to get None output"
     print("original data: {}".format(a_great_sentence))
@@ -144,11 +155,25 @@ def test_case_3():
     # Expected output: None
     a_great_sentence = None
     encoded_data, tree = huffman_encoding(a_great_sentence)
+    #print("The size of the encoded data is: {}".format(sys.getsizeof(int(encoded_data, base=2))))
+    print("The content of the encoded data is: {}".format(encoded_data))
     decoded_data = huffman_decoding(encoded_data, tree)
     assert decoded_data == None, "ERROR: For None as an input, expected to get None output"
     print("original data: {}".format(a_great_sentence))
     print("decoded data: {}\n".format(decoded_data))
 
+
+def test_case_4():
+    # Test scenario: Test when input is a string.
+    # Expected output: the original data which is "Hello world"
+    a_great_sentence = "AAAAAAAAAA"
+    encoded_data, tree = huffman_encoding(a_great_sentence)
+    print("The size of the encoded data is: {}".format(sys.getsizeof(int(encoded_data, base=2))))
+    print("The content of the encoded data is: {}".format(encoded_data))
+    decoded_data = huffman_decoding(encoded_data, tree)
+    assert decoded_data == a_great_sentence, "ERROR: original data and decoded data are different"
+    print("original data: {}".format(a_great_sentence))
+    print("decoded data: {}\n".format(decoded_data))
 
 
 if __name__ == "__main__":
@@ -160,6 +185,9 @@ if __name__ == "__main__":
 
     test_case_3()
     # Expected output: None
+
+    test_case_4()
+    # Expected output: AAAAAAAAAA
 
     # provided_example()
 
