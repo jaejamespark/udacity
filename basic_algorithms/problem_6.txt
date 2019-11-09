@@ -1,0 +1,4 @@
+The time complexity of "get_min_max" function is O(n) where n is the length of the input array. The comparisons to find min or max would take O(1). There would be n number of O(1)  comparisons so therefore, the overall time complexity would be O(n).
+
+
+The space complexity is O(1) since we are comparing one element at a time.
