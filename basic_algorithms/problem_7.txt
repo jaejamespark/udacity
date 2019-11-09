@@ -1,29 +1,57 @@
-RouteTrie, 
+1. RouteTrieNode
 
-__init__
+1.1 Insert method
 
+1.1.1 Time complexity
+O(1) because we are inserting the path (key) and RouteTrieNode (value) into a dictionary
 
-Insert
-
-Find
-
-
-RouteTrieNode
-
-__init__
-
-Insert
+1.1.2 Space complexity
+O(1) because we are inserting only one item at a time
 
 
 
-Router
+2. RouteTrie
 
-__init__
+2.1 insert method
 
-add_handler
+2.1.1 Time complexity
+O(n) where n is the number of path components because I'm iterating through path components and insert each path componet into RouteTrieNode.
+
+2.1.2 Space complexity
+O(n) where n is the number of path components because I'm storing each path component in RouteTrieNode.
+
+2.2 find method
+
+2.2.1 Time complexity
+O(n) where n is the number of path components because I'm iterating through path components and trying to check if a handler exists for the path.
+
+2.2.2 Space complexity
+O(1) because I'm looking through the path components one by one and not storing any path.
 
 
-Lookup
+3. Router
 
+3.1 add_handler method
 
-split_path
+3.1.1 Time complexity
+O(n+m) where n is the number of characters in the path string and m is the number of path components. The split_path operation costs O(n) (more detailed analysis available in 3.3.1) and the insert operation costs O(m) (more detailed analysis is available in 2.1.1). Those two cominbed would be the total cost, O(n+m).
+
+3.1.2 Space complexity
+O(n+m) where n is the number of characters in the path string and m is the number of path components. The split_path needs O(n) to store the path string and the insert needs O(m) to store path components.
+
+3.2 lookup method
+
+3.2.1 Time complexity
+O(n+m) where n is the number of characters in the path string and m is the number of path components. The split_path operation costs O(n) (more detailed analysis available in 3.3.1) and the find operation costs O(m) (more detailed analysis is available in 2.2.1). Those two cominbed would be the total cost, O(n+m).
+
+3.2.2 Space complexity
+O(n) where n is the number of characters in the path string and m is the number of path components. The split_path needs O(n) to store the path string and the find needs O(1) since I'm just checking one path component at a time without storing them.
+
+3.3 split_path method
+
+3.3.1 Time complexity
+O(n) where n is the number of characters in the input path string because the split('/') function has to look through all the characteres to find the '/' to perform split.
+
+3.3.2 Space complexity
+O(n) where n is the number of characters in the input path string. The string is stored to be split up by "/".
+

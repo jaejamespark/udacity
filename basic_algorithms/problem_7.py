@@ -88,9 +88,7 @@ class Router:
 
     def split_path(self, path):
         # you need to split the path into parts for
-        # both the add_handler and loopup functions,
-        # so it should be placed in the function here
-        #         print(path)
+        # both the add_handler and loopup functions.
         if len(path) <= 0:
             return path
         if len(path) == 1:
