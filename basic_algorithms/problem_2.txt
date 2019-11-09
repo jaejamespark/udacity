@@ -1,0 +1,3 @@
+The time complexity of rotated_array_search function is O(logn) where n is the number of elements in the input_list. The find_pivot function in the rotated_array_search function costs O(logn) because I'm using binrary search to find the pivot in the list with size n. Once I find the pivot, I'm doing binary search on the partiton of the list that contains the number. This binrary search would cost O(logn). Overall, I'm doing two binrary searches which costs O(2logn) = O(logn).
+
+The space complexity would be O(n) where n is the number of elements in the input list. I'm storing the list in memory to find the number using binary search.
