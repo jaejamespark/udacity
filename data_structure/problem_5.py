@@ -28,8 +28,8 @@ class Blockchain:
     def insert(self, data):
 
         if data is None:
-            print("ERROR: Cannot add block without any data")
-            return
+            raise ValueError("ERROR: Cannot add block without any data")
+
 
         if not isinstance(data, str):
             raise ValueError("Data should be string type")
@@ -47,22 +47,29 @@ class Blockchain:
 
     def print(self):
         if self.tail is None:
-            print("ERROR: Block is empty. Nothing to print")
-            return
-        block = self.tail
-        while block.prev is not None:
-            print(block.data)
-            block = block.prev
-        print(block.data)
+            raise ValueError("ERROR: Block is empty. Nothing to print")
 
+        block = self.tail
+        output = ""
+        output += "---------------------tail-------------------------\n"
+        while block is not None:
+            output += "--------------------------------------------------\n"
+            output += "timestamp: " + str(block.timestamp) + "\n"
+            output += "data: " + block.data + "\n"
+            output += "previous_hash: " + str(block.previous_hash) + "\n"
+            output += "hash: " + block.hash + "\n"
+            output += "--------------------------------------------------\n"
+            block = block.prev
+        output += "---------------------head-------------------------\n\n"
+        print(output)
 
 
 def test_case_1():
-    # Test scenario: Create a block chain
-    # containing two blocks which contain "hello" and "world"
-    # in blocks then print the output to make sure the
-    # blockchain has the correct data
-    # Expected output: "world \n hello" will be printed.
+    print("TEST CASE 1")
+    # Test scenario: Create a block chain containing two blocks which
+    # contain "hello" and "world" as data in the blocks then
+    # print the output to make sure the blockchain has the correct data
+    # Expected output: "world" -> hello" blocks will be printed.
     blockchain = Blockchain()
     blockchain.insert('hello')
     blockchain.insert('world')
@@ -70,42 +77,58 @@ def test_case_1():
 
 
 def test_case_2():
+    print("TEST CASE 2")
     # Test scenario: Try creating a blockchain with None value.
     # Expected output: ValueError will be thrown.
     blockchain = Blockchain()
     try:
         blockchain.insert(None)
     except ValueError as e:
-        print("ValueError: " + str(e))
+        print("PASS: expected ValueError received: " + str(e))
+    else:
+        print("FAIL")
 
 
 def test_case_3():
+    print("TEST CASE 3")
     # Test scenario: Try creating a blockchain with integer value.
     # Expected output: ValueError will be thrown.
     blockchain = Blockchain()
     try:
         blockchain.insert(123)
     except ValueError as e:
-        print("ValueError: " + str(e))
-
+        print("PASS: expected ValueError received: " + str(e))
+    else:
+        print("FAIL")
 
 def test_case_4():
+    print("TEST CASE 4")
     # Test scenario: Print empty blockchain
     # Expected output: "ERROR: Error message, Block is empty. Nothing to print"
     blockchain = Blockchain()
-    blockchain.print()
+    try:
+        blockchain.print()
+    except ValueError as e:
+        print("PASS: expected ValueError received: " + str(e))
+    else:
+        print("FAIL")
 
 
 if __name__ == "__main__":
     test_case_1()
-    # Output is "world \n hello"
+    # Test scenario: Create a block chain containing two blocks which
+    # contain "hello" and "world" as data in the blocks then
+    # print the output to make sure the blockchain has the correct data
+    # Expected output: "world" -> hello" blocks will be printed.
 
     test_case_2()
-    # "Data should be string type" error should occur
+    # Test scenario: Try creating a blockchain with None value.
+    # Expected output: ValueError will be thrown.
 
     test_case_3()
-    # "Data should be string type" error should occur
+    # Test scenario: Try creating a blockchain with integer value.
+    # Expected output: ValueError will be thrown.
 
     test_case_4()
-    # "Data should be string type" error should occur
-
+    # Test scenario: Print empty blockchain
+    # Expected output: "ERROR: Error message, Block is empty. Nothing to print"

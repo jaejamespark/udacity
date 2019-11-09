@@ -17,10 +17,13 @@ def find_files(suffix, path):
        a list of paths
     """
     if path is None:
-        return []
+        raise ValueError("ValueError: path not provided")
 
     if suffix is None:
         raise ValueError("ValueError: suffix not provided")
+
+    if not os.path.exists(path):
+        raise FileNotFoundError("FileNotFoundError: The path does not exist")
 
     results = []
     items = os.listdir(path)
@@ -33,45 +36,73 @@ def find_files(suffix, path):
             results.extend(find_files(suffix, os.path.join(path, item)))
     return results
 
-c = find_files(".c", "./testdir")
-print('results')
-print(c)
+#c = find_files(".c", "./testdir")
+#print('results')
+#print(c)
 
 def test_case_1():
     # Test scenario: Tests when path is None
-    # Expected output: an empty list
+    # Expected output: ValueError
     suffix = ".c"
     path = None
-    result = find_files(suffix, path)
-    print(result)
+    try:
+        result = find_files(suffix, path)
+    except ValueError as e:
+        print("PASS: expected result received. " + str(e))
+    else:
+        print("FAIL: expected result not received. Expected ValueError")
 
 
 def test_case_2():
-    # Test scenario: Tests when path is None
+    # Test scenario: Tests when suffix is None
     # Expected output: an empty list
     suffix = None
     path = "./"
     try:
         result = find_files(suffix, path)
     except ValueError as e:
-        print(str(e))
+        print("PASS: expected result received. " + str(e))
+    else:
+        print("FAIL: expected result not received. Expected ValueError")
 
 
 def test_case_3():
     # Test scenario: Finds .py files in current directory
-    # Expected output: an empty list
+    # Expected output: a list of .py files (if exists)
     suffix = ".py"
     path = "./"
     result = find_files(suffix, path)
+
+    print("PASS: expected result received.")
     print(result)
+
+def test_case_4():
+        # Test scenario: Finds .py files in not-existing path
+        # Expected output: FileNotFound Exception
+        suffix = ".py"
+        path = "NOT_EXITING_PATH___"
+        try:
+            result = find_files(suffix, path)
+        except FileNotFoundError as e:
+            print("PASS: Expected FileNotFoundError exception received. " + str(e))
+        else:
+            print("FAIL: Expecting FileNotFoundError exception but not received")
+
 
 
 if __name__ == "__main__":
     test_case_1()
-    # output is an empty list
+    # Test scenario: Tests when path is None
+    # Expected output: an empty list
 
     test_case_2()
-    # output is an ValueError message
+    # Test scenario: Tests when suffix is None
+    # Expected output: an empty list
 
     test_case_3()
-    # output is a list of .py files if they exists in the path
+    # Test scenario: Finds .py files in current directory
+    # Expected output: a list of .py files (if exists)
+
+    test_case_4()
+    # Test scenario: Finds .py files in not-existing path
+    # Expected output: FileNotFound Exception
