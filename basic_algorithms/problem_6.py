@@ -9,8 +9,8 @@ def get_min_max(ints):
     if ints is None or len(ints) < 1:
         return None
 
-    min_int = None
-    max_int = None
+    min_int = ints[0]
+    max_int = ints[0]
 
     for i in ints:
         if min_int == None:

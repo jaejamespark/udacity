@@ -5,24 +5,29 @@ def sort_012(input_list):
     Args:
        input_list(list): List to be sorted
     """
-    if input_list is None:
-        return []
+    if len(input_list) <= 1:
+        return input_list
 
+    zero_index = 0
+    two_index = len(input_list)-1
     current_index = 0
-    offset = 0
-    while current_index + offset < len(input_list):
-        if input_list[current_index] == 0:
-            input_list.pop(current_index)
-            input_list.insert(0, 0)
-        elif input_list[current_index] == 2:
-            input_list.pop(current_index)
-            input_list.append(2)
-            current_index -= 1  # Move to previous index because 2 is moved to the end
-            offset += 1  # increase the offset since the current index moved 1 back
 
-        current_index += 1
+    while current_index <= two_index:
+
+        if input_list[current_index] == 0:
+            input_list[current_index] = input_list[zero_index]
+            input_list[zero_index] = 0
+            current_index += 1
+            zero_index += 1
+        elif input_list[current_index] == 2:
+            input_list[current_index] = input_list[two_index]
+            input_list[two_index] = 2
+            two_index -= 1
+        else:
+            current_index += 1
 
     return input_list
+
 
 
 def test_function(test_case):
